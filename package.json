@@ -3,9 +3,9 @@
 	"scripts": {
 		"lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
 		"lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
-		"dev": "cd app && pnpm i && pnpm run dev",
-		"build": "cd app && pnpm i && pnpm run build",
-		"preview": "cd app && pnpm run preview"
+		"dev": "cd app && npm i && npm run dev",
+		"build": "cd app && npm i && npm run build",
+		"preview": "cd app && npm run preview"
 	},
 	"dependencies": {
 		"@coral-xyz/anchor": "^0.31.1",
