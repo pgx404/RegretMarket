@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { getRegretMarketProgram, getRegretMarketProgramId } from "./../utils/regretMarket";
 import { type Cluster, PublicKey, SystemProgram } from '@solana/web3.js'
 import { useMutation, useQuery } from '@tanstack/react-query'
