@@ -1,0 +1,896 @@
+/* Overlay */
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.85);
+	backdrop-filter: blur(8px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+	animation: fadeIn 0.3s ease;
+	padding: 80px 20px 20px 20px;
+	/* Extra top padding for navbar */
+	overflow-y: auto;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+/* Modal Container */
+.modal {
+	background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg) 50%, var(--bg-dark) 100%);
+	border: 3px solid var(--primary);
+	border-radius: 24px;
+	width: 100%;
+	max-width: 1400px;
+	max-height: calc(100vh - 120px);
+	overflow-y: auto;
+	box-shadow:
+		0 0 60px rgba(147, 165, 207, 0.3),
+		0 0 100px rgba(147, 165, 207, 0.2),
+		inset 0 0 40px rgba(0, 0, 0, 0.3);
+	animation: modalSlideIn 0.3s ease-out;
+	position: relative;
+	pointer-events: auto;
+}
+
+.modal::before {
+	content: '';
+	position: absolute;
+	top: -3px;
+	left: -3px;
+	right: -3px;
+	bottom: -3px;
+	background: linear-gradient(45deg,
+			var(--primary),
+			var(--success),
+			var(--secondary),
+			var(--danger),
+			var(--primary));
+	border-radius: 24px;
+	z-index: -1;
+	opacity: 0.4;
+	animation: borderGlow 4s linear infinite;
+	pointer-events: none;
+}
+
+@keyframes borderGlow {
+
+	0%,
+	100% {
+		filter: hue-rotate(0deg) brightness(1);
+	}
+
+	50% {
+		filter: hue-rotate(180deg) brightness(1.2);
+	}
+}
+
+@keyframes modalSlideIn {
+	from {
+		transform: scale(0.95) translateY(-20px);
+		opacity: 0;
+	}
+
+	to {
+		transform: scale(1) translateY(0);
+		opacity: 1;
+	}
+}
+
+/* Custom Scrollbar */
+.modal::-webkit-scrollbar {
+	width: 12px;
+}
+
+.modal::-webkit-scrollbar-track {
+	background: var(--bg-dark);
+	border-radius: 0 24px 24px 0;
+}
+
+.modal::-webkit-scrollbar-thumb {
+	background: var(--primary);
+	border-radius: 10px;
+	border: 2px solid var(--bg-dark);
+}
+
+.modal::-webkit-scrollbar-thumb:hover {
+	background: var(--success);
+}
+
+/* Header */
+.header {
+	padding: 30px 30px 20px 30px;
+	border-bottom: 3px dashed var(--border);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: sticky;
+	top: 0;
+	background: var(--bg-dark);
+	z-index: 10;
+}
+
+.title {
+	font-size: 2.2rem;
+	font-weight: 900;
+	background: linear-gradient(135deg, var(--success) 0%, var(--primary) 50%, var(--secondary) 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	margin: 0;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	animation: titlePulse 3s ease-in-out infinite;
+	text-shadow: 0 0 20px rgba(147, 165, 207, 0.5);
+}
+
+@keyframes titlePulse {
+
+	0%,
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+
+	50% {
+		transform: scale(1.02);
+		opacity: 0.95;
+	}
+}
+
+.closeBtn {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border: 3px solid var(--danger);
+	background: var(--bg-light);
+	color: var(--danger);
+	font-size: 1.8rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	overflow: hidden;
+}
+
+.closeBtn::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+	background: var(--danger);
+	transition: all 0.4s ease;
+	transform: translate(-50%, -50%);
+}
+
+.closeBtn:hover::before {
+	width: 100%;
+	height: 100%;
+}
+
+.closeBtn:hover {
+	color: white;
+	transform: rotate(90deg) scale(1.1);
+	box-shadow: 0 0 20px rgba(233, 116, 104, 0.6);
+}
+
+/* Form */
+.form {
+	padding: 30px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 25px;
+	grid-template-areas:
+		"market market"
+		"price price"
+		"position position"
+		"collateral entry"
+		"size calculated"
+		"actions actions";
+}
+
+/* Grid Area Assignments */
+.formGroup:nth-child(1) {
+	grid-area: market;
+}
+
+.priceDisplay {
+	grid-area: price;
+}
+
+.formGroup:nth-child(3) {
+	grid-area: position;
+}
+
+.formGroup:nth-child(4) {
+	grid-area: collateral;
+}
+
+.formGroup:nth-child(5) {
+	grid-area: entry;
+}
+
+.formGroup:nth-child(6) {
+	grid-area: size;
+}
+
+.calculatedSection {
+	grid-area: calculated;
+}
+
+.formActions {
+	grid-area: actions;
+}
+
+/* Form Group */
+.formGroup {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.formGroup.fullWidth {
+	width: 100%;
+}
+
+.label {
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: var(--text);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.labelWithIcon {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.tokenIcon {
+	width: 24px;
+	height: 24px;
+	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.balanceInfo {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: var(--success);
+	padding: 4px 12px;
+	background: rgba(108, 183, 131, 0.15);
+	border-radius: 12px;
+	border: 2px solid var(--success);
+	animation: balanceBlink 3s ease-in-out infinite;
+}
+
+@keyframes balanceBlink {
+
+	0%,
+	100% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0.85;
+	}
+}
+
+.hint {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: var(--warning);
+	font-style: italic;
+	padding: 2px 8px;
+	background: rgba(205, 161, 93, 0.15);
+	border-radius: 8px;
+	border: 1px solid var(--warning);
+}
+
+/* Input Fields */
+.input,
+.select {
+	width: 100%;
+	padding: 16px 20px;
+	font-size: 1.1rem;
+	font-weight: 600;
+	background: var(--bg-dark);
+	border: 3px solid var(--border);
+	border-radius: 16px;
+	color: var(--text);
+	transition: all 0.3s ease;
+	font-family: inherit;
+}
+
+.input:focus,
+.select:focus {
+	outline: none;
+	border-color: var(--primary);
+	box-shadow:
+		0 0 20px rgba(147, 165, 207, 0.4),
+		inset 0 2px 10px rgba(0, 0, 0, 0.3);
+	transform: scale(1.02);
+}
+
+.input::placeholder {
+	color: var(--text-muted);
+	opacity: 0.6;
+}
+
+.select {
+	cursor: pointer;
+	appearance: none;
+	background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%2393A5CF' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 20px center;
+	padding-right: 50px;
+}
+
+.select:hover {
+	border-color: var(--primary);
+}
+
+.select option {
+	background: var(--bg-dark);
+	color: var(--text);
+	padding: 10px;
+}
+
+.inputHint {
+	font-size: 0.85rem;
+	color: var(--text-muted);
+	font-style: italic;
+	padding-left: 4px;
+}
+
+/* Price Display */
+.priceDisplay {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 24px;
+	background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
+	border: 3px solid var(--success);
+	border-radius: 16px;
+	box-shadow: 0 4px 20px rgba(108, 183, 131, 0.2);
+	animation: priceGlow 2s ease-in-out infinite;
+}
+
+@keyframes priceGlow {
+
+	0%,
+	100% {
+		box-shadow: 0 4px 20px rgba(108, 183, 131, 0.2);
+	}
+
+	50% {
+		box-shadow: 0 4px 30px rgba(108, 183, 131, 0.4);
+	}
+}
+
+.priceLabel {
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: var(--text);
+	text-transform: uppercase;
+}
+
+.priceValue {
+	font-size: 1.8rem;
+	font-weight: 900;
+	color: var(--success);
+	text-shadow: 0 2px 10px rgba(108, 183, 131, 0.5);
+	animation: priceUpdate 0.5s ease;
+}
+
+@keyframes priceUpdate {
+
+	0%,
+	100% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(1.1);
+	}
+}
+
+.priceLoading {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.spinner {
+	width: 24px;
+	height: 24px;
+	border: 3px solid var(--border);
+	border-top-color: var(--success);
+	border-radius: 50%;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Toggle Group */
+.toggleGroup {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 15px;
+	padding: 10px;
+	background: var(--bg-dark);
+	border-radius: 16px;
+	border: 3px solid var(--border);
+}
+
+.toggleBtn {
+	padding: 18px 24px;
+	font-size: 1.2rem;
+	font-weight: 900;
+	border: 3px solid var(--border);
+	border-radius: 12px;
+	background: var(--bg-light);
+	color: var(--text-muted);
+	cursor: pointer;
+	transition: all 0.3s ease;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	position: relative;
+	overflow: hidden;
+}
+
+.toggleBtn::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+	transition: all 0.5s ease;
+	transform: translate(-50%, -50%);
+}
+
+.toggleBtn:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.toggleBtnActive.longBtn {
+	background: var(--gradient-success);
+	border-color: var(--success);
+	color: white;
+	box-shadow: 0 6px 30px rgba(108, 183, 131, 0.5);
+	animation: buttonPop 0.3s ease;
+}
+
+.toggleBtnActive.shortBtn {
+	background: var(--gradient-danger);
+	border-color: var(--danger);
+	color: white;
+	box-shadow: 0 6px 30px rgba(233, 116, 104, 0.5);
+	animation: buttonPop 0.3s ease;
+}
+
+@keyframes buttonPop {
+	0% {
+		transform: scale(0.9);
+	}
+
+	50% {
+		transform: scale(1.05);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
+.longBtn:hover {
+	border-color: var(--success);
+}
+
+.shortBtn:hover {
+	border-color: var(--danger);
+}
+
+/* Calculated Section */
+.calculatedSection {
+	background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-dark) 100%);
+	border: 3px solid var(--primary);
+	border-radius: 20px;
+	padding: 20px;
+	box-shadow:
+		0 8px 30px rgba(147, 165, 207, 0.3),
+		inset 0 2px 10px rgba(0, 0, 0, 0.2);
+	animation: sectionSlideIn 0.5s ease;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 100%;
+}
+
+@keyframes sectionSlideIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.calculatedTitle {
+	font-size: 1.2rem;
+	font-weight: 900;
+	color: var(--primary);
+	text-transform: uppercase;
+	margin-bottom: 15px;
+	text-align: center;
+	letter-spacing: 2px;
+	text-shadow: 0 2px 10px rgba(147, 165, 207, 0.5);
+}
+
+.calculatedGrid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 12px;
+	flex: 1;
+}
+
+.calculatedRow {
+	padding: 16px;
+	background: var(--bg-dark);
+	border: 2px solid var(--border);
+	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.calculatedRow::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(147, 165, 207, 0.2), transparent);
+	transition: left 0.5s ease;
+}
+
+.calculatedRow:hover::before {
+	left: 100%;
+}
+
+.calculatedRow:hover {
+	transform: translateY(-3px);
+	border-color: var(--primary);
+	box-shadow: 0 6px 20px rgba(147, 165, 207, 0.3);
+}
+
+.calculatedLabel {
+	font-size: 0.9rem;
+	font-weight: 700;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.calculatedValue {
+	font-size: 1.4rem;
+	font-weight: 900;
+	color: var(--text);
+}
+
+.leverageValue {
+	color: var(--warning);
+	text-shadow: 0 2px 10px rgba(205, 161, 93, 0.5);
+	animation: leveragePulse 2s ease-in-out infinite;
+}
+
+@keyframes leveragePulse {
+
+	0%,
+	100% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(1.03);
+	}
+}
+
+/* Form Actions */
+.formActions {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 15px;
+	margin-top: 10px;
+	padding-top: 25px;
+	border-top: 3px dashed var(--border);
+}
+
+.submitBtn,
+.cancelBtn {
+	padding: 20px 32px;
+	font-size: 1.3rem;
+	font-weight: 900;
+	border-radius: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	border: 3px solid;
+	position: relative;
+	overflow: hidden;
+}
+
+.submitBtn {
+	background: var(--gradient-success);
+	border-color: var(--success);
+	color: white;
+	box-shadow: 0 6px 30px rgba(108, 183, 131, 0.4);
+	animation: submitGlow 3s ease-in-out infinite;
+}
+
+@keyframes submitGlow {
+
+	0%,
+	100% {
+		box-shadow: 0 6px 30px rgba(108, 183, 131, 0.4);
+	}
+
+	50% {
+		box-shadow: 0 6px 35px rgba(108, 183, 131, 0.5);
+	}
+}
+
+.submitBtn::before {
+	content: '🚀';
+	position: absolute;
+	top: 50%;
+	left: -30px;
+	font-size: 1.5rem;
+	transform: translateY(-50%);
+	transition: all 0.5s ease;
+	opacity: 0;
+}
+
+.submitBtn:hover::before {
+	left: 20px;
+	opacity: 1;
+}
+
+.submitBtn:hover {
+	transform: translateY(-5px) scale(1.03);
+	box-shadow: 0 10px 50px rgba(108, 183, 131, 0.6);
+}
+
+.submitBtn:active {
+	transform: translateY(-2px) scale(0.98);
+}
+
+.submitBtn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	transform: none;
+	animation: none;
+}
+
+.submitBtn:disabled:hover {
+	box-shadow: 0 6px 30px rgba(108, 183, 131, 0.4);
+}
+
+.cancelBtn {
+	background: var(--bg-light);
+	border-color: var(--border);
+	color: var(--text);
+}
+
+.cancelBtn:hover {
+	background: var(--bg-dark);
+	border-color: var(--danger);
+	color: var(--danger);
+	transform: translateY(-3px);
+	box-shadow: 0 6px 20px rgba(233, 116, 104, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+	.modal {
+		max-width: 95%;
+	}
+
+	.form {
+		gap: 20px;
+	}
+}
+
+@media (max-width: 768px) {
+	.modal {
+		max-width: 95%;
+		border-radius: 20px;
+		max-height: calc(100vh - 80px);
+	}
+
+	.form {
+		grid-template-columns: 1fr;
+		padding: 20px;
+		gap: 20px;
+		grid-template-areas:
+			"market"
+			"price"
+			"position"
+			"collateral"
+			"entry"
+			"size"
+			"calculated"
+			"actions";
+	}
+
+	.header {
+		padding: 20px;
+	}
+
+	.title {
+		font-size: 1.6rem;
+	}
+
+	.closeBtn {
+		width: 40px;
+		height: 40px;
+		font-size: 1.4rem;
+	}
+
+	.label {
+		font-size: 1rem;
+	}
+
+	.input,
+	.select {
+		padding: 14px 16px;
+		font-size: 1rem;
+	}
+
+	.toggleGroup {
+		gap: 10px;
+	}
+
+	.toggleBtn {
+		padding: 14px 16px;
+		font-size: 1rem;
+	}
+
+	.calculatedGrid {
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
+
+	.calculatedTitle {
+		font-size: 1.2rem;
+	}
+
+	.calculatedValue {
+		font-size: 1.2rem;
+	}
+
+	.formActions {
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
+
+	.submitBtn,
+	.cancelBtn {
+		padding: 16px 24px;
+		font-size: 1.1rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.modal {
+		max-height: 95vh;
+		border-radius: 16px;
+	}
+
+	.header {
+		padding: 16px;
+	}
+
+	.title {
+		font-size: 1.3rem;
+		letter-spacing: 1px;
+	}
+
+	.closeBtn {
+		width: 36px;
+		height: 36px;
+		font-size: 1.2rem;
+	}
+
+	.form {
+		padding: 16px;
+		gap: 16px;
+	}
+
+	.priceDisplay {
+		flex-direction: column;
+		gap: 8px;
+		text-align: center;
+		padding: 16px;
+	}
+
+	.priceValue {
+		font-size: 1.5rem;
+	}
+
+	.calculatedSection {
+		padding: 16px;
+	}
+
+	.calculatedRow {
+		padding: 12px;
+	}
+
+	.submitBtn::before {
+		display: none;
+	}
+}
+
+/* Fun Easter Egg Animations - REMOVED SHAKE */
+/* Shake animation removed to prevent flashing */
+
+/* Meme Mode: Add some extra flair */
+.submitBtn:hover::after {
+	content: '💎🙌';
+	position: absolute;
+	right: 20px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 1.2rem;
+	animation: diamondHands 0.5s ease;
+}
+
+@keyframes diamondHands {
+	from {
+		opacity: 0;
+		transform: translateY(-50%) scale(0);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(-50%) scale(1);
+	}
+}

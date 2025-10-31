@@ -1,0 +1,20 @@
+.messageContainer {
+	position: fixed;
+	top: 80px;
+	right: 20px;
+	z-index: 9999;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	max-width: 420px;
+	width: 100%;
+}
+
+@media (max-width: 768px) {
+	.messageContainer {
+		top: 70px;
+		right: 12px;
+		left: 12px;
+		max-width: none;
+	}
+}

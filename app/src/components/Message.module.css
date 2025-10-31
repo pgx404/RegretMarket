@@ -1,0 +1,160 @@
+.message {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 16px 20px;
+	border-radius: 12px;
+	border: 2px solid;
+	backdrop-filter: blur(10px);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+	animation: slideIn 0.3s ease-out;
+	position: relative;
+	overflow: hidden;
+}
+
+.message::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 4px;
+}
+
+.messageIcon {
+	flex-shrink: 0;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.messageIcon svg {
+	width: 100%;
+	height: 100%;
+}
+
+.messageContent {
+	flex: 1;
+	font-size: 15px;
+	line-height: 1.5;
+	color: var(--text);
+	font-weight: 500;
+}
+
+.messageClose {
+	flex-shrink: 0;
+	width: 24px;
+	height: 24px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 6px;
+	transition: all 0.2s ease;
+	color: var(--text-muted);
+}
+
+.messageClose:hover {
+	background: rgba(0, 0, 0, 0.1);
+	color: var(--text);
+}
+
+.messageClose svg {
+	width: 16px;
+	height: 16px;
+}
+
+.messageInfo {
+	background: rgba(91, 134, 229, 0.1);
+	border-color: var(--info);
+}
+
+.messageInfo::before {
+	background: var(--info);
+}
+
+.messageInfo .messageIcon {
+	color: var(--info);
+}
+
+.messageSuccess {
+	background: rgba(76, 175, 80, 0.1);
+	border-color: var(--success);
+}
+
+.messageSuccess::before {
+	background: var(--success);
+}
+
+.messageSuccess .messageIcon {
+	color: var(--success);
+}
+
+.messageWarning {
+	background: rgba(255, 193, 7, 0.1);
+	border-color: var(--warning);
+}
+
+.messageWarning::before {
+	background: var(--warning);
+}
+
+.messageWarning .messageIcon {
+	color: var(--warning);
+}
+
+.messageError {
+	background: rgba(244, 67, 54, 0.1);
+	border-color: var(--danger);
+}
+
+.messageError::before {
+	background: var(--danger);
+}
+
+.messageError .messageIcon {
+	color: var(--danger);
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.messageExit {
+	animation: slideOut 0.3s ease-out forwards;
+}
+
+@keyframes slideOut {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	to {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+}
+
+@media (max-width: 768px) {
+	.message {
+		padding: 14px 16px;
+		gap: 12px;
+	}
+
+	.messageContent {
+		font-size: 14px;
+	}
+}

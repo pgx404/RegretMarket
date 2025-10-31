@@ -1,0 +1,219 @@
+.navbar {
+	position: sticky;
+	top: 0;
+	width: 100%;
+	background: var(--bg);
+	border-bottom: 1px solid var(--border);
+	z-index: 1000;
+	backdrop-filter: blur(10px);
+	background: rgba(var(--bg-rgb, 26, 30, 43), 0.95);
+}
+
+.navbarContent {
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 16px 24px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+}
+
+.navbarLeft {
+	display: flex;
+	align-items: center;
+	gap: 32px;
+	flex: 1;
+}
+
+.navbarLogo {
+	font-size: 28px;
+	font-weight: 800;
+	margin: 0;
+	cursor: pointer;
+	display: flex;
+	align-items: baseline;
+	gap: 6px;
+	transition: all 0.3s ease;
+	user-select: none;
+	background: var(--gradient-primary);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	letter-spacing: -0.02em;
+}
+
+.navbarLogo:hover {
+	transform: translateY(-2px);
+	filter: brightness(1.2);
+}
+
+.logoRegret {
+	font-weight: 900;
+	background: var(--gradient-danger);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+}
+
+.logoMarket {
+	font-weight: 700;
+	background: var(--gradient-primary);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.navbarLinks {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.navLink {
+	background: transparent;
+	border: none;
+	color: var(--text-muted);
+	font-size: 15px;
+	font-weight: 500;
+	padding: 8px 16px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	position: relative;
+	font-family: inherit;
+}
+
+.navLink::after {
+	content: '';
+	position: absolute;
+	bottom: 4px;
+	left: 50%;
+	transform: translateX(-50%) scaleX(0);
+	width: 60%;
+	height: 2px;
+	background: var(--gradient-primary);
+	border-radius: 2px;
+	transition: transform 0.2s ease;
+}
+
+.navLink:hover {
+	color: var(--text);
+	background: var(--bg-light);
+}
+
+.navLink:hover::after {
+	transform: translateX(-50%) scaleX(1);
+}
+
+.navLink.active {
+	color: var(--text);
+	background: var(--bg-light);
+	font-weight: 600;
+}
+
+.navLink.active::after {
+	transform: translateX(-50%) scaleX(1);
+	background: var(--gradient-primary);
+}
+
+.navbarRight {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+/* Wallet button overrides */
+.navbarRight :global(.wallet-adapter-button) {
+	height: 40px;
+	padding: 0 20px;
+	font-size: 14px;
+	font-weight: 600;
+	border-radius: 10px;
+	background: var(--gradient-primary) !important;
+	border: none !important;
+	transition: all 0.2s ease;
+}
+
+.navbarRight :global(.wallet-adapter-button:hover:not([disabled])) {
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(139, 152, 242, 0.3);
+}
+
+.navbarRight :global(.wallet-adapter-button:active:not([disabled])) {
+	transform: translateY(0);
+}
+
+.navbarRight :global(.wallet-adapter-button[disabled]) {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* Connected wallet state */
+.navbarRight :global(.wallet-adapter-button-trigger) {
+	background: var(--bg-light) !important;
+	border: 1px solid var(--border) !important;
+	color: var(--text) !important;
+}
+
+.navbarRight :global(.wallet-adapter-button-trigger:hover:not([disabled])) {
+	border-color: var(--primary) !important;
+	box-shadow: 0 4px 12px rgba(139, 152, 242, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+	.navbarContent {
+		padding: 12px 16px;
+		gap: 16px;
+	}
+
+	.navbarLeft {
+		gap: 16px;
+	}
+
+	.navbarLogo {
+		font-size: 22px;
+	}
+
+	.navbarLinks {
+		gap: 4px;
+	}
+
+	.navLink {
+		font-size: 14px;
+		padding: 6px 12px;
+	}
+
+	.navbarRight :global(.wallet-adapter-button) {
+		padding: 0 16px;
+		font-size: 13px;
+		height: 36px;
+	}
+}
+
+@media (max-width: 480px) {
+	.navbarLeft {
+		gap: 12px;
+	}
+
+	.navbarLogo {
+		font-size: 20px;
+		gap: 4px;
+	}
+
+	.navbarLinks {
+		gap: 2px;
+	}
+
+	.navLink {
+		font-size: 13px;
+		padding: 6px 10px;
+	}
+
+	.navLink::after {
+		display: none;
+	}
+}
