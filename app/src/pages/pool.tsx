@@ -1,24 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRegretMarket } from './../regretMarket/api';
 import type { VaultData } from './../regretMarket/api';
 import styles from './pool.module.css';
 import usdc from '../assets/usdc.svg';
 
 const Pools: React.FC = () => {
-	const { vaults, createPool, config } = useRegretMarket();
-	const [isCreating, setIsCreating] = useState(false);
-	const [tokenMint, setTokenMint] = useState('');
+	const { vaults, } = useRegretMarket();
 
-	const handleCreatePool = async (e: React.FormEvent) => {
-		e.preventDefault();
-		try {
-			await createPool.mutateAsync({ tokenMint });
-			setIsCreating(false);
-			setTokenMint('');
-		} catch (error) {
-			console.error('Failed to create pool:', error);
-		}
-	};
 
 	const calculateUtilization = (vault: VaultData): number => {
 		if (vault.lpDeposit === 0) return 0;
